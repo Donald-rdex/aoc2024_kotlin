@@ -36,6 +36,27 @@ fun main() {
         return Pair(groupOne, groupTwo)
     }
 
+    fun alternateSolutions(input: List<String>) : Int {
+        // since in part two we have to compare ListA against a count of number of times it shows up in the B List,
+        // make a map of B to the count of number of times a number shows up in the list.
+        //
+        var partTwo = 0
+        val bCounter = mutableMapOf<Int, Int>()
+        val aList = mutableListOf<Int>()
+        input.forEach { line ->
+            val (a, b) = line.split("   ").map { it.toInt() }
+            aList.add(a)
+            val oldBCount = bCounter.putIfAbsent(b, 1)
+            if (oldBCount != null) {
+                bCounter[b] = oldBCount + 1
+            }
+        }
+        // still an n^2 solution though :-(
+        aList.forEach { it -> partTwo += it * bCounter.getOrDefault(it, 0) }
+
+        return partTwo
+    }
+
 
     // Test if implementation meets criteria from the description, like:
     val testInput = readInput("Day01_test")
@@ -44,6 +65,9 @@ fun main() {
 
     val input = readInput("Day01")
     val (groupA, groupB) = inputToGroups(input)
+
+    println("Alt solution(s): ${alternateSolutions(input)}")
+
     println(part1(groupA, groupB))
     println(part2(groupA, groupB))
 }
