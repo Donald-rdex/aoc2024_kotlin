@@ -7,7 +7,7 @@ fun main() {
         for (line in input) {
             val levels = line.split(" ").map { it.toInt() }
             var isSafe = true
-            var direction = levels.first() - levels.last()  //increasing or decreasing?
+            val direction = levels.first() - levels.last()  //increasing or decreasing?
 
             for (levelIdx in 0 until levels.size - 1) {
                 if (direction >= 0) {
@@ -30,8 +30,6 @@ fun main() {
 
             if (isSafe) {
                 safeCount++
-            } else {
-                isSafe = true
             }
         }
         return safeCount
