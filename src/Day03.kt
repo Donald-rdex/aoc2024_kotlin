@@ -14,30 +14,23 @@ fun main() {
     }
 
     fun part2(input: List<String>): Int {
-        val startPattern = "(?<beginning>.*)don't\\(\\)".toRegex()
-        val enablePattern = "do\\(\\)(?<enabled>.*)don't\\(\\)".toRegex()
-        val endPattern = "do\\(\\)(?<enabled>.*)$".toRegex()
+        val mulOrEnable = """(mul\((?<a>[0-9]+),(?<b>[0-9]+)\)|do\(\)|don't\(\))""".toRegex()
         var mulSum = 0
 
-        input.forEach { line ->
-            var startRe = 1
-            // lines start enabled, so only have to find where they stop
-            startPattern.find(line, startRe)?.let { match ->
-                startRe += match.groups["beginning"]?.range?.last?.plus(0) ?: 0
-                mulSum += part1(listOf("", match.groups["beginning"].toString()))
-            }
-            enablePattern.findAll(line, startRe).let { match ->
-                match.forEach { innerMatch ->
-                    startRe += innerMatch.groups["enabled"]?.range?.last?.plus(0) ?: 0
-                    mulSum += part1(listOf(innerMatch.groups["enabled"]?.value.toString()))
-                }
-            }
-            endPattern.find(line, startRe)?.let { match ->
-                mulSum += part1(listOf("", match.groups["enabled"].toString()))
-            }
+        var enabled = true
 
+        input.forEach { line ->
+            mulOrEnable.findAll(line).forEach { match ->
+                when (match.value) {
+                    "don't()" -> enabled = false
+                    "do()" -> enabled = true
+                    else -> if (enabled) {
+                        mulSum += (match.groups["a"]?.value?.toInt() ?: 0) * (match.groups["b"]?.value?.toInt() ?: 0)
+                    }
+                }
+//                println("$enabled: ${match.value}")  // debugging state changes
+            }
         }
-        println("returning: $mulSum")
         return mulSum
     }
 
