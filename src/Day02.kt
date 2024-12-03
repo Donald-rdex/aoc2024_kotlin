@@ -35,8 +35,10 @@ fun main() {
         return safeCount
     }
 
-    fun part2(input: List<String>): Int {
+    fun part1Alternate(input: List<String>): Pair<Int, MutableList<List<Int>>> {
+        // alternate solution to part 1 using sets.
         var safeCount = 0
+        val unsafeLists = mutableListOf<List<Int>>()
         for (line in input) {
             val safePDeltas = mutableSetOf(1, 2, 3)
             val safeNDeltas =  mutableSetOf(-1,-2,-3)
@@ -47,17 +49,42 @@ fun main() {
                 safeNDeltas.add(levelDiff)
             }
 
-            if (safePDeltas.size == 4 || safeNDeltas.size == 4) {
+            if (safePDeltas.size == 3 || safeNDeltas.size == 3) {
                 safeCount++
+            } else {
+                unsafeLists.add(levels)
             }
-
         }
-        return safeCount
+
+        return Pair(safeCount, unsafeLists)
     }
 
-    fun parseInputToDataStructure(input: List<String>): List<Int> {
+    fun part2(input: List<String>): Int {
+        var (safeCount, unsafeLists) = part1Alternate(input)
 
-        return listOf(0,1,2)
+        for (unsafeList in unsafeLists) {
+//            println(unsafeList)
+            var workingMutations = 0
+            for (levelIdx in unsafeList.indices) {
+                //remove element and see if remaining list succeeds.
+                var unsafeString = ""
+                unsafeList.forEachIndexed { idx, iit ->
+                    if (idx != levelIdx) { unsafeString += "$iit " }
+                }
+//                println(listOf(unsafeString.trim()))
+                if (part1(listOf(unsafeString.trim())) > 0 ) {
+                    workingMutations++
+//                    println(workingMutations)
+                }
+                if (workingMutations > 1) { break }
+            }
+            if (workingMutations >= 1) {
+//                println("safe!")
+                safeCount++
+            }
+        }
+//        println(safeCount)
+        return safeCount
     }
 
     // Or read a large test input from the `src/Day01_test.txt` file:
@@ -67,7 +94,6 @@ fun main() {
     // Read the input from the `src/Day01.txt` file.
     val input = readInput("Day02")
     part1(input).println()
-
 
     check(part2(testInput) == 4)
     part2(input).println()
