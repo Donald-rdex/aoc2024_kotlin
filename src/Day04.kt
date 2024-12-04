@@ -1,89 +1,92 @@
 fun main() {
+
+    val debug = false
+
     fun checkIndexNN(input: MutableList<MutableList<Char>>, x: Int, y: Int): Int {
-        if (x > 3) {
+        if (x >= 3) {
             if (input[x][y] == 'X' && input[x-1][y] == 'M' && input[x-2][y] == 'A' && input[x-3][y] == 'S') {
-                print(input[x][y])
+//                print(input[x][y])
                 return 1
             }
         }
-        print(input[x][y].lowercaseChar())
+//        print(input[x][y].lowercaseChar())
         return 0
     }
 
     fun checkIndexSS(input: MutableList<MutableList<Char>>, x: Int, y: Int): Int {
         if (x < input.size - 3) {
             if (input[x][y] == 'X' && input[x+1][y] == 'M' && input[x+2][y] == 'A' && input[x+3][y] == 'S') {
-                print(input[x][y])
+//                print(input[x][y])
                 return 1
             }
         }
-        print(input[x][y].lowercaseChar())
+//        print(input[x][y].lowercaseChar())
         return 0
     }
 
     fun checkIndexEE(input: MutableList<MutableList<Char>>, x: Int, y: Int): Int {
         if (y <= input[x].size - 3) {
             if (input[x][y] == 'X' && input[x][y+1] == 'M' && input[x][y + 2] == 'A' && input[x][y + 3] == 'S') {
-                print(input[x][y])
+//                print(input[x][y])
                 return 1
             }
         }
-        print(input[x][y].lowercaseChar())
+//        print(input[x][y].lowercaseChar())
         return 0
     }
 
     fun checkIndexWW(input: MutableList<MutableList<Char>>, x: Int, y: Int): Int {
-        if (y > 3) {
+        if (y >= 3) {
             if (input[x][y] == 'X' && input[x][y - 1] == 'M' && input[x][y-2] == 'A' && input[x][y-3]=='S') {
-                print(input[x][y])
+//                print(input[x][y])
                 return 1
             }
         }
-        print(input[x][y].lowercaseChar())
+//        print(input[x][y].lowercaseChar())
         return 0
     }
 
     fun checkIndexSE(input: MutableList<MutableList<Char>>, x: Int, y: Int): Int {
         if (x < input.size - 3 && y < input[x].size - 3) {
             if (input[x][y] == 'X' && input[x+1][y+1] == 'M' && input[x+2][y+2] == 'A' && input[x+3][y+3] == 'S') {
-                print(input[x][y])
+//                print(input[x][y])
                 return 1
             }
         }
-        print(input[x][y].lowercaseChar())
+//        print(input[x][y].lowercaseChar())
         return 0
     }
 
     fun checkIndexSW(input: MutableList<MutableList<Char>>, x: Int, y: Int): Int {
-        if (x < input.size - 3 && y > 3) {
+        if (x < input.size - 3 && y >= 3) {
             if (input[x][y] == 'X' && input[x+1][y-1] == 'M' && input[x+2][y-2] == 'A' && input[x+3][y-3] == 'S') {
-                print(input[x][y])
+//                print(input[x][y])
                 return 1
             }
         }
-        print(input[x][y].lowercaseChar())
+//        print(input[x][y].lowercaseChar())
         return 0
     }
 
     fun checkIndexNE(input: MutableList<MutableList<Char>>, x: Int, y: Int): Int {
-        if (x > 3 && y < input[x].size - 3) {
+        if (x >= 3 && y < input[x].size - 3) {
             if (input[x][y] == 'X' && input[x-1][y+1] == 'M' && input[x-2][y+2] == 'A' && input[x-3][y+3] == 'S') {
-                print(input[x][y])
+//                print(input[x][y])
                 return 1
             }
         }
-        print(input[x][y].lowercaseChar())
+//        print(input[x][y].lowercaseChar())
         return 0
     }
 
     fun checkIndexNW(input: MutableList<MutableList<Char>>, x: Int, y: Int): Int {
-        if (x > 3 && y > 3) {
+        if (x >= 3 && y >= 3) {
             if (input[x][y] == 'X' && input[x-1][y-1] == 'M' && input[x-2][y-2] == 'A' && input[x-3][y-3] == 'S') {
-                print(input[x][y])
+//                print(input[x][y])
                 return 1
             }
         }
-        print(input[x][y].lowercaseChar())
+//        print(input[x][y].lowercaseChar())
         return 0
     }
 
@@ -95,32 +98,61 @@ fun main() {
             for (y in input[x].indices) {
                 when (input[x][y]) {
                     'X' -> {
-                        listSum += checkIndexNN(input, x, y); print("$listSum")
-                        listSum += checkIndexSS(input, x, y); print("$listSum")
-                        listSum += checkIndexEE(input, x, y); print("$listSum")
-                        listSum += checkIndexWW(input, x, y); print("$listSum")
-                        listSum += checkIndexSE(input, x, y); print("$listSum")
-                        listSum += checkIndexSW(input, x, y); print("$listSum")
-                        listSum += checkIndexNE(input, x, y); print("$listSum")
-                        listSum += checkIndexNW(input, x, y); print("$listSum")
+                        listSum += checkIndexNN(input, x, y)
+                        listSum += checkIndexSS(input, x, y)
+                        listSum += checkIndexEE(input, x, y)
+                        listSum += checkIndexWW(input, x, y)
+                        listSum += checkIndexSE(input, x, y)
+                        listSum += checkIndexSW(input, x, y)
+                        listSum += checkIndexNE(input, x, y)
+                        listSum += checkIndexNW(input, x, y)
                         if (listSum != oldListSum) {
                             oldListSum = listSum
-                            print(input[x][y])
+                            if (debug) print(input[x][y])
                         } else {
-                            print("o")
+                            if (debug) print("o")
                         }
                     }
-                    else -> print(".")
+                    else -> if (debug) print(".")
                 }
             }
-            println("  $listSum")
+            if (debug) println("  $listSum")
         }
-        println(listSum)
+        if (debug) println(listSum)
         return listSum
     }
 
-    fun part2(input: List<String>): Int {
+    fun part2(input: MutableList<MutableList<Char>>): Int {
         var listSum = 0
+
+        for (x in input.indices) {
+            for (y in input[x].indices) {
+                when (input[x][y]) {
+                    'A' -> {
+                        if (x>=1 && y>=1 && x < input.size - 1 && y < input[x].size - 1) {
+                            val nw = input[x-1][y-1]
+                            val ne = input[x-1][y+1]
+                            val sw = input[x+1][y-1]
+                            val se = input[x+1][y+1]
+                            if ( (nw == 'M' && se == 'S' && ne == 'M' && sw == 'S') ||
+                                 (nw == 'S' && se == 'M' && ne == 'S' && sw == 'M') ||
+
+                                (nw == 'S' && se == 'M' && ne == 'M' && sw == 'S') ||
+
+                                (nw == 'M' && se == 'S' && ne == 'S' && sw == 'M')
+                                ) {
+                                listSum += 1
+                                if (debug) print(input[x][y])
+                            } else {
+                                if (debug) print("o")
+                            }
+                        }
+                    }
+                    else -> if (debug) print(".")
+                }
+            }
+            if (debug) println("  $listSum")
+        }
         return listSum
     }
 
@@ -145,9 +177,9 @@ fun main() {
 
     val input = readInput("Day04")
     val inputGrid = inputToGrid(input)
-    println(part1(inputGrid))
+//    println(part1(inputGrid))
 
-//    check(part2(testInputGrid) == 0)
-//    println(part2(inputGrid))
+    check(part2(testInputGrid) == 9)
+    println(part2(inputGrid))
 
 }
